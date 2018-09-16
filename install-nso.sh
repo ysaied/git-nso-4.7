@@ -91,7 +91,7 @@ fi
 check_package="$(pip freeze | grep paramiko)"
 if [[ "$check_package" ]]
 then 
-   echo "Paramiko Installed"
+   echo "Paramiko Python Package Installed"
 else
    (pip install Paramiko)
 fi 
@@ -99,7 +99,7 @@ fi
 check_package="$(pip freeze | grep ncs)"
 if [[ "$check_package" ]]
 then 
-   echo "NCS Installed"
+   echo "NCS Python Package Installed"
 else
    (pip install ncs)
 fi 
