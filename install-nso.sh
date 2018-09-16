@@ -24,7 +24,7 @@ echo ""
 sudo apt-get -y update > /dev/null
 sudo apt-get -y upgrade > /dev/null
 
-check_package="$(apt list --installed show default-jre)"
+check_package="$(apt-get list --installed show default-jre)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Default JRE Installed"
@@ -32,7 +32,7 @@ else
    (sudo apt-get install -y default-jre > /dev/null)
 fi
 
-check_package="$(apt list --installed show openjdk-11-jre-headless)"
+check_package="$(apt-get list --installed show openjdk-11-jre-headless)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Open JDK 11 Installed"
@@ -40,7 +40,7 @@ else
    (sudo apt-get install -y openjdk-11-jre-headless > /dev/null)
 fi
 
-check_package="$(apt list --installed show openjdk-8-jre-headless)"
+check_package="$(apt-get list --installed show openjdk-8-jre-headless)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Open JDK 8 Installed"
@@ -48,7 +48,7 @@ else
    (sudo apt-get install -y openjdk-8-jre-headless > /dev/null)
 fi      
 
-check_package="$(apt list --installed show expect)"
+check_package="$(apt-get list --installed show expect)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Expect Installed"
@@ -56,7 +56,7 @@ else
    (sudo apt-get install -y expect > /dev/null)
 fi 
 
-check_package="$(apt list --installed show sshpass)"
+check_package="$(apt-get list --installed show sshpass)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "SSH Pass Installed"
@@ -64,7 +64,7 @@ else
    (sudo apt-get install -y sshpass > /dev/null)
 fi 
 
-check_package="$(apt list --installed show python)"
+check_package="$(apt-get list --installed show python)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Python 2.7 Installed"
@@ -72,7 +72,7 @@ else
    (sudo apt-get install -y python > /dev/null)
 fi 
 
-check_package="$(apt list --installed show python3)"
+check_package="$(apt-get list --installed show python3)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Python 3.6 Installed"
@@ -80,7 +80,7 @@ else
    (sudo apt-get install -y python3 > /dev/null)
 fi 
 
-check_package="$(apt list --installed show python-pip)"
+check_package="$(apt-get list --installed show python-pip)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Python PIP Installed"
@@ -109,7 +109,7 @@ echo "##########################################"
 echo "Install Ant"
 echo "##########################################"
 echo "" 
-check_package="$(apt list --installed show ant)"
+check_package="$(apt-get list --installed show ant)"
 if [[ $check_package == *"installed"* ]]
 then 
    echo "Ant Installed"
@@ -130,7 +130,7 @@ echo "Extract NSO Files"
 echo "##########################################"
 echo "" 
 mkdir $HOME/nso-4.7
-sh $HOME/nso-tmp/nso.installer.bin $HOME/nso-4.7 --local-install
+sh $HOME/nso-tmp/nso.installer.bin $HOME/nso-4.7 --local-install  > /dev/null
 . $HOME/nso-4.7/ncsrc
 echo "Directory nso-4.7 created ...!!!"
 (cd $HOME/nso-4.7 && exec ncs-setup --dest $HOME/nso-run)
