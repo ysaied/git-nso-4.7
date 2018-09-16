@@ -24,19 +24,86 @@ echo ""
 sudo apt -y update
 sudo apt -y upgrade
 
-sudo apt install -y default-jre            
-sudo apt install -y openjdk-11-jre-headless
-sudo apt install -y openjdk-8-jre-headless
+check_package="$(apt list --installed show default-jre)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Default JRE Installed"
+else
+   (sudo apt install -y default-jre)
+fi
 
-sudo apt install -y expect
-sudo apt install -y sshpass
+check_package="$(apt list --installed show openjdk-11-jre-headless)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Open JDK 11 Installed"
+else
+   (sudo apt install -y openjdk-11-jre-headless)
+fi
 
-sudo apt install -y python
-sudo apt install -y python3
-sudo apt install -y python-pip
+check_package="$(apt list --installed show openjdk-8-jre-headless)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Open JDK 8 Installed"
+else
+   (sudo apt install -y openjdk-8-jre-headless)
+fi      
 
-pip install Paramiko
-pip install ncs
+check_package="$(apt list --installed show expect)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Expect Installed"
+else
+   (sudo apt install -y expect)
+fi 
+
+check_package="$(apt list --installed show sshpass)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "SSH Pass Installed"
+else
+   (sudo apt install -y sshpass)
+fi 
+
+check_package="$(apt list --installed show python)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Python 2.7 Installed"
+else
+   (sudo apt install -y python)
+fi 
+
+check_package="$(apt list --installed show python3)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Python 3.6 Installed"
+else
+   (sudo apt install -y python3)
+fi 
+
+check_package="$(apt list --installed show python-pip)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Python PIP Installed"
+else
+   (sudo apt install -y python-pip)
+fi 
+
+check_package="$(pip freeze | grep paramiko)"
+if [[ "$check_package" ]]
+then 
+   echo "Paramiko Installed"
+else
+   (pip install Paramiko)
+fi 
+
+check_package="$(pip freeze | grep ncs)"
+if [[ "$check_package" ]]
+then 
+   echo "NCS Installed"
+else
+   (pip install ncs)
+fi 
+
 echo ""
 echo "##########################################"
 echo "Install Ant"
