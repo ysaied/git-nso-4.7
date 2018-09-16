@@ -109,7 +109,13 @@ echo "##########################################"
 echo "Install Ant"
 echo "##########################################"
 echo "" 
-sudo apt install -y ant
+check_package="$(apt list --installed show ant)"
+if [[ $check_package == *"installed"* ]]
+then 
+   echo "Ant Installed"
+else
+   (sudo apt install -y ant)
+fi 
 echo ""
 echo "##########################################"
 echo "Download NSO Installer"
