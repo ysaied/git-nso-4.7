@@ -15,6 +15,8 @@ pkill ncs
 if [ -d $HOME/nso-tmp ]; then sudo rm -r $HOME/nso-tmp && echo "nso-tmp directory deleted"; fi
 if [ -d $HOME/nso-4.7 ]; then sudo rm -r $HOME/nso-4.7 && echo "nso-4.7 directory deleted"; fi
 if [ -d $HOME/nso-run ]; then sudo rm -r $HOME/nso-run && echo "nso-run directory deleted"; fi
+if [ -d $HOME/ncs-4.7 ]; then sudo rm -r $HOME/ncs-4.7 && echo "ncs-4.7 directory deleted"; fi
+if [ -d $HOME/ncs-run ]; then sudo rm -r $HOME/ncs-run && echo "ncs-run directory deleted"; fi
 
 echo ""
 echo "##########################################"
@@ -129,18 +131,18 @@ echo "##########################################"
 echo "Extract NSO Files"
 echo "##########################################"
 echo "" 
-mkdir $HOME/nso-4.7
-sh $HOME/nso-tmp/nso.installer.bin $HOME/nso-4.7 --local-install  > /dev/null
-. $HOME/nso-4.7/ncsrc
-echo "Directory nso-4.7 created ...!!!"
-(cd $HOME/nso-4.7 && exec ncs-setup --dest $HOME/nso-run)
+mkdir $HOME/ncs-4.7
+sh $HOME/nso-tmp/nso.installer.bin $HOME/ncs-4.7 --local-install  > /dev/null
+. $HOME/ncs-4.7/ncsrc
+echo "Directory ncs-4.7 created ...!!!"
+(cd $HOME/ncs-4.7 && exec ncs-setup --dest $HOME/ncs-run)
 echo "Directory nso-run created ...!!!"
 echo ""
 echo "##########################################"
 echo "Starting NSO"    
 echo "##########################################"
 echo "" 
-(cd $HOME/nso-run && exec ncs)
+(cd $HOME/ncs-run && exec ncs)
 nso_status="$(ncs --status | grep status)"
 if [[ "$nso_status" == *"started"* ]]
 then
