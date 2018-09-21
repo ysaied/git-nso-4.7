@@ -17,6 +17,8 @@ if [ -d $HOME/nso-4.7 ]; then sudo rm -r $HOME/nso-4.7 && echo "nso-4.7 director
 if [ -d $HOME/nso-run ]; then sudo rm -r $HOME/nso-run && echo "nso-run directory deleted"; fi
 if [ -d $HOME/ncs-4.7 ]; then sudo rm -r $HOME/ncs-4.7 && echo "ncs-4.7 directory deleted"; fi
 if [ -d $HOME/ncs-run ]; then sudo rm -r $HOME/ncs-run && echo "ncs-run directory deleted"; fi
+if [ -f ~/.bash_aliases]; then sudo rm ~/.bash_aliases && echo ".bash_aliases file deleted"; fi
+
 
 echo ""
 echo "##########################################"
@@ -133,7 +135,13 @@ echo "##########################################"
 echo "" 
 mkdir $HOME/ncs-4.7
 sh $HOME/nso-tmp/nso.installer.bin $HOME/ncs-4.7 --local-install  > /dev/null
-source $HOME/ncs-4.7/ncsrc
+. $HOME/ncs-4.7/ncsrc
+touch ~/.bash_aliases
+echo "if [ -f /$HOME/ncs-4.7/ncsrc ]
+then
+   . /$HOME/ncs-4.7/ncsrc
+fi" | tee -a ~/.bash_aliases > /dev/null
+
 echo "Directory ncs-4.7 created ...!!!"
 (cd $HOME/ncs-4.7 && exec ncs-setup --dest $HOME/ncs-run)
 echo "Directory ncs-run created ...!!!"
@@ -158,33 +166,33 @@ echo ""
 (cd $NCS_DIR/packages/neds/cisco-ios/src && make clean) > /tmp/ned-cisco-ios
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-ios
 then
-    echo "Cisco IOS/IOS-XE NED installed successfully"
+    echo "Cisco IOS/IOS-XE NED installed successfully :-)"
 else
-	echo "Cisco IOS/IOS-XE NED installation failed"
+	echo "Cisco IOS/IOS-XE NED installation failed :-("
 fi
 
 (cd $NCS_DIR/packages/neds/cisco-iosxr/src && make clean) > /tmp/ned-cisco-iosxr
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-iosxr
 then
-    echo "Cisco IOS-XR NED installed successfully"
+    echo "Cisco IOS-XR NED installed successfully :-)"
 else
-	echo "Cisco IOS-XR NED installation failed"
+	echo "Cisco IOS-XR NED installation failed :-("
 fi
 
 (cd $NCS_DIR/packages/neds/cisco-nx/src && make clean) > /tmp/ned-cisco-nxos
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-nxos
 then
-    echo "Cisco NXOS NED installed successfully"
+    echo "Cisco NXOS NED installed successfully :-)"
 else
-	echo "Cisco NXOS NED installation failed"
+	echo "Cisco NXOS NED installation failed :-("
 fi
 
 (cd $NCS_DIR/packages/neds/juniper-junos/src && make clean) > /tmp/ned-junos
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-junos
 then
-    echo "Juniper JUNOS NED installed successfully"
+    echo "Juniper JUNOS NED installed successfully :-)"
 else
-	echo "Juniper JUNOS NED installation failed"
+	echo "Juniper JUNOS NED installation failed :-("
 fi
 echo ""
 echo "##########################################"
