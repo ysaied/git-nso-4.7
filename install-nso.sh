@@ -164,6 +164,7 @@ echo "Installing NEDs"
 echo "##########################################"
 echo "" 
 (cd $NCS_DIR/packages/neds/cisco-ios/src && make clean) > /tmp/ned-cisco-ios
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-ios)
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-ios
 then
     echo "Cisco IOS/IOS-XE NED installed successfully :-)"
@@ -172,6 +173,7 @@ else
 fi
 
 (cd $NCS_DIR/packages/neds/cisco-iosxr/src && make clean) > /tmp/ned-cisco-iosxr
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-iosxr)
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-iosxr
 then
     echo "Cisco IOS-XR NED installed successfully :-)"
@@ -180,6 +182,7 @@ else
 fi
 
 (cd $NCS_DIR/packages/neds/cisco-nx/src && make clean) > /tmp/ned-cisco-nxos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-nx)
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-nxos
 then
     echo "Cisco NXOS NED installed successfully :-)"
@@ -188,6 +191,7 @@ else
 fi
 
 (cd $NCS_DIR/packages/neds/juniper-junos/src && make clean) > /tmp/ned-junos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
 if grep -q "BUILD SUCCESSFUL" /tmp/ned-junos
 then
     echo "Juniper JUNOS NED installed successfully :-)"
