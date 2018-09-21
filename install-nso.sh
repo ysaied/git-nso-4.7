@@ -18,6 +18,9 @@ if [ -d $HOME/nso-run ]; then sudo rm -r $HOME/nso-run && echo "nso-run director
 if [ -d $HOME/ncs-4.7 ]; then sudo rm -r $HOME/ncs-4.7 && echo "ncs-4.7 directory deleted"; fi
 if [ -d $HOME/ncs-run ]; then sudo rm -r $HOME/ncs-run && echo "ncs-run directory deleted"; fi
 if [ -f ~/.bash_aliases ]; then sudo rm ~/.bash_aliases && echo ".bash_aliases file deleted"; fi
+if [ -f /var/tmp/ncs-ned-activate.sh ]; then sudo rm /var/tmp/ncs-ned-activate.sh && echo "ncs-ned-activate.sh file deleted"; fi
+if [ -f /var/tmp/ncs-ned-output ]; then sudo rm /var/tmp/ncs-ned-output && echo "ncs-ned-output file deleted"; fi
+
 
 
 echo ""
@@ -206,8 +209,7 @@ echo "Loading NEDs in NSO"
 echo "##########################################"
 echo ""
 
-sudo rm /var/tmp/ncs-ned-activate.sh
-sudo rm /var/tmp/ncs-ned-output
+ssh-keygen -f "/home/admin/.ssh/known_hosts" -R "[localhost]:2024" > /dev/null
 echo '#!/usr/bin/expect -f
 spawn sshpass -p admin ssh -o StrictHostKeyChecking=no admin@localhost -p 2024
 expect "> "
@@ -218,7 +220,6 @@ expect "> "
 send "exit \r"
 interact' | sudo tee /var/tmp/ncs-ned-activate.sh > /dev/null
 sudo chmod 775 /var/tmp/ncs-ned-activate.sh
-ssh-keygen -f "/home/admin/.ssh/known_hosts" -R "[localhost]:2024"
 (cd /var/tmp && ./ncs-ned-activate.sh) > /dev/null
 
 if grep -q "cisco-ios" /var/tmp/ncs-ned-output
