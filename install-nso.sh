@@ -163,7 +163,7 @@ else
 fi
 echo ""
 echo "##########################################"
-echo "Installing NEDs"    
+echo "Compile NSO NEDs"    
 echo "##########################################"
 echo "" 
 
@@ -205,7 +205,7 @@ fi
 
 echo ""
 echo "##########################################"
-echo "Loading NEDs in NSO"    
+echo "Loading NEDs in NSO .. that might take few minutes"    
 echo "##########################################"
 echo ""
 
@@ -249,8 +249,6 @@ then
 else
    echo "Juniper JUNOS NED not installed :-(" 
 fi
-
-
 
 echo ""
 echo "##########################################"
