@@ -133,10 +133,10 @@ echo "##########################################"
 echo "" 
 mkdir $HOME/ncs-4.7
 sh $HOME/nso-tmp/nso.installer.bin $HOME/ncs-4.7 --local-install  > /dev/null
-. $HOME/ncs-4.7/ncsrc
+source $HOME/ncs-4.7/ncsrc
 echo "Directory ncs-4.7 created ...!!!"
 (cd $HOME/ncs-4.7 && exec ncs-setup --dest $HOME/ncs-run)
-echo "Directory nso-run created ...!!!"
+echo "Directory ncs-run created ...!!!"
 echo ""
 echo "##########################################"
 echo "Starting NSO"    
