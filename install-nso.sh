@@ -206,6 +206,7 @@ echo "Loading NEDs in NSO"
 echo "##########################################"
 echo ""
 
+sudo rm /var/tmp/ncs-ned-activate.sh
 sudo rm /var/tmp/ncs-ned-output
 echo '#!/usr/bin/expect -f
 spawn sshpass -p admin ssh -o StrictHostKeyChecking=no admin@localhost -p 2024
@@ -217,6 +218,7 @@ expect "> "
 send "exit \r"
 interact' | sudo tee /var/tmp/ncs-ned-activate.sh > /dev/null
 sudo chmod 775 /var/tmp/ncs-ned-activate.sh
+ssh-keygen -f "/home/admin/.ssh/known_hosts" -R "[localhost]:2024"
 (cd /var/tmp && ./ncs-ned-activate.sh) > /dev/null
 
 if grep -q "cisco-ios" /var/tmp/ncs-ned-output
