@@ -137,9 +137,9 @@ mkdir $HOME/ncs-4.7
 sh $HOME/nso-tmp/nso.installer.bin $HOME/ncs-4.7 --local-install  > /dev/null
 . $HOME/ncs-4.7/ncsrc
 touch ~/.bash_aliases
-echo "if [ -f /$HOME/ncs-4.7/ncsrc ]
+echo "if [ -f $HOME/ncs-4.7/ncsrc ]
 then
-   . /$HOME/ncs-4.7/ncsrc
+   . $HOME/ncs-4.7/ncsrc
 fi" | tee -a ~/.bash_aliases > /dev/null
 
 echo "Directory ncs-4.7 created ...!!!"
