@@ -163,41 +163,92 @@ echo "##########################################"
 echo "Installing NEDs"    
 echo "##########################################"
 echo "" 
-(cd $NCS_DIR/packages/neds/cisco-ios/src && make) > /tmp/ned-cisco-ios
+
+(cd $NCS_DIR/packages/neds/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-ios)
-if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-ios
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
+then
+    echo "Cisco IOS/IOS-XE NED compiled successfully :-)"
+else
+	echo "Cisco IOS/IOS-XE NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/cisco-iosxr/src && make) > /var/tmp/ned-cisco-iosxr
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-iosxr)
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-iosxr
+then
+    echo "Cisco IOS-XR NED compiled successfully :-)"
+else
+	echo "Cisco IOS-XR NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/cisco-nx/src && make) > /var/tmp/ned-cisco-nxos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-nx)
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-nxos
+then
+    echo "Cisco NXOS NED compiled successfully :-)"
+else
+	echo "Cisco NXOS NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/juniper-junos/src && make) > /var/tmp/ned-junos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
+if grep -q "Nothing to be done" /var/tmp/ned-junos
+then
+    echo "Juniper JUNOS NED compiled successfully :-)"
+else
+	echo "Juniper JUNOS NED compilation failed :-("
+fi
+
+echo ""
+echo "##########################################"
+echo "Loading NEDs in NSO"    
+echo "##########################################"
+echo ""
+
+sudo rm /var/tmp/ncs-ned-output
+echo '#!/usr/bin/expect -f
+spawn sshpass -p admin ssh -o StrictHostKeyChecking=no admin@localhost -p 2024
+expect "> "
+send "request packages reload force \r"
+expect "> "
+send "show packages package package-version | save /var/tmp/ncs-ned-output \r"
+expect "> "
+send "exit \r"
+interact' | sudo tee /var/tmp/ncs-ned-activate.sh > /dev/null
+sudo chmod 775 /var/tmp/ncs-ned-activate.sh
+(cd /var/tmp && ./ncs-ned-activate.sh) > /dev/null
+
+if grep -q "cisco-ios" /var/tmp/ncs-ned-output
 then
     echo "Cisco IOS/IOS-XE NED installed successfully :-)"
 else
-	echo "Cisco IOS/IOS-XE NED installation failed :-("
+   echo "Cisco IOS/IOS-XE NED not installed :-(" 
 fi
 
-(cd $NCS_DIR/packages/neds/cisco-iosxr/src && make) > /tmp/ned-cisco-iosxr
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-iosxr)
-if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-iosxr
+if grep -q "cisco-iosxr" /var/tmp/ncs-ned-output
 then
     echo "Cisco IOS-XR NED installed successfully :-)"
 else
-	echo "Cisco IOS-XR NED installation failed :-("
+   echo "Cisco IOS-XR NED not installed :-(" 
 fi
 
-(cd $NCS_DIR/packages/neds/cisco-nx/src && make) > /tmp/ned-cisco-nxos
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-nx)
-if grep -q "BUILD SUCCESSFUL" /tmp/ned-cisco-nxos
+if grep -q "cisco-nx" /var/tmp/ncs-ned-output
 then
     echo "Cisco NXOS NED installed successfully :-)"
 else
-	echo "Cisco NXOS NED installation failed :-("
+   echo "Cisco NXOS NED not installed :-(" 
 fi
 
-(cd $NCS_DIR/packages/neds/juniper-junos/src && make) > /tmp/ned-junos
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
-if grep -q "BUILD SUCCESSFUL" /tmp/ned-junos
+if grep -q "juniper-junos" /var/tmp/ncs-ned-output
 then
     echo "Juniper JUNOS NED installed successfully :-)"
 else
-	echo "Juniper JUNOS NED installation failed :-("
+   echo "Juniper JUNOS NED not installed :-(" 
 fi
+
+
+
 echo ""
 echo "##########################################"
 echo "Log into NSO"    
