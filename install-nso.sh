@@ -17,7 +17,7 @@ if [ -d $HOME/nso-4.7 ]; then sudo rm -r $HOME/nso-4.7 && echo "nso-4.7 director
 if [ -d $HOME/nso-run ]; then sudo rm -r $HOME/nso-run && echo "nso-run directory deleted"; fi
 if [ -d $HOME/ncs-4.7 ]; then sudo rm -r $HOME/ncs-4.7 && echo "ncs-4.7 directory deleted"; fi
 if [ -d $HOME/ncs-run ]; then sudo rm -r $HOME/ncs-run && echo "ncs-run directory deleted"; fi
-if [ -f ~/.bash_aliases]; then sudo rm ~/.bash_aliases && echo ".bash_aliases file deleted"; fi
+if [ -f ~/.bash_aliases ]; then sudo rm ~/.bash_aliases && echo ".bash_aliases file deleted"; fi
 
 
 echo ""
