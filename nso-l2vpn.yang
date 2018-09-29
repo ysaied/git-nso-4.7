@@ -51,7 +51,6 @@ module nso-l2vpn {
 	  leaf attachemnt-circuit {
 	    description "edge router service side interface";
 	    type string;
-	    }
 	  }
 	}
       }
