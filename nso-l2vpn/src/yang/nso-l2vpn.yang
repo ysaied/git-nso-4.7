@@ -1,34 +1,59 @@
+/* Learning NSO
+ * L2VPN Service Model 
+*/
 module nso-l2vpn {
-  namespace "http://com/example/nsol2vpn";
+  namespace "http://yang.ysaied.com/nso/conf/l2vpn"; 
   prefix nso-l2vpn;
 
-  import ietf-inet-types {
-    prefix inet;
-  }
   import tailf-ncs {
     prefix ncs;
   }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  
+  organization "Yasser Saied";
+  contact "ysaied80@gmail.com";
+  description "L2VPN Service module";
+  revision 2018-10-01 {
+    description "NSO-L2VPN : 0.1";
+  }
 
-  list nso-l2vpn {
-    key name;
-
-    uses ncs:service-data;
-    ncs:servicepoint "nso-l2vpn";
-
-    leaf name {
-      type string;
-    }
-
-    // may replace this with other ways of refering to the devices.
-    leaf-list device {
-      type leafref {
-        path "/ncs:devices/ncs:device/ncs:name";
+  augment /ncs:services {
+    container l2vpn-instances {
+      description "l2vpn instances";
+      list instance {
+	key name;
+	unique pwid;
+	ordered-by user;
+	description "l2vpn instance";
+	leaf name {
+	  description "l2vpn instance name";
+	  type string;
+	}
+	leaf pwid {
+	  description "l2vpn pesudo-wire id";
+	  type uint16;
+	}
+	list edge-nodes {
+	  description "pe nodes";
+	  key edge-node;
+	  leaf edge-node {
+	    description "l2vpn service edge router";
+	    type leafref {
+	      path "/ncs:devices/ncs:device/ncs:name";
+	    }
+	  }
+	  leaf loopback {
+	    description "edge router loopback for l2vpn service termination";
+	    type inet:ipv4-address;
+	  } 
+	  leaf attachemnt-circuit {
+	    description "edge router service side interface";
+	    type string;
+	  }
+	}
       }
-    }
-
-    // replace with your own stuff here
-    leaf dummy {
-      type inet:ipv4-address;
     }
   }
 }
