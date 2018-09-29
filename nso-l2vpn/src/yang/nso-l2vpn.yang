@@ -1,0 +1,34 @@
+module nso-l2vpn {
+  namespace "http://com/example/nsol2vpn";
+  prefix nso-l2vpn;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  list nso-l2vpn {
+    key name;
+
+    uses ncs:service-data;
+    ncs:servicepoint "nso-l2vpn";
+
+    leaf name {
+      type string;
+    }
+
+    // may replace this with other ways of refering to the devices.
+    leaf-list device {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+
+    // replace with your own stuff here
+    leaf dummy {
+      type inet:ipv4-address;
+    }
+  }
+}
