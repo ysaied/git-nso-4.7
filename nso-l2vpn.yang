@@ -15,7 +15,7 @@ module nso-l2vpn {
   organization "Yasser Saied";
   contact "ysaied80@gmail.com";
   description "L2VPN Service module";
-  revision 2018-10-1 {
+  revision 2018-10-01 {
     description "NSO-L2VPN : 0.1";
   }
 
