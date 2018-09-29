@@ -1,0 +1,50 @@
+/*
+ * Learning NSO
+ * L2VPN Service Model
+ *
+/
+module nso-l2vpn {
+  namespace "http://yang.ysaied.com/nso/conf/l2vpn"; 
+  prefix nso-l2vpn;
+
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+   organization "Yasser Saied";
+
+   contact "ysaied80@gmail.com";
+
+   description "L2VPN Service module";
+
+   revision 01-10-2018 {
+     description "NSO-L2VPN : 0.1";
+   }
+
+  augment /ncs:services {
+    list l2vpn {
+      key name;
+      unique pw-id;
+
+      uses ncs:service-data;
+      ncs:servicepoint "l2vpn";
+
+      leaf name {
+        tailf:info "L2VPN Service Instance Name";
+        type string;
+      }
+      leaf pw-id {
+        tailf:info "L2VPN PW-ID";
+        mandatory true;
+        type uint32;
+      }
+      leaf pe1 {
+        tailf:info "PE1 Device ID";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+    }  
+  }
+}
