@@ -15,7 +15,7 @@ module nso-l2vpn {
   organization "Yasser Saied";
   contact "ysaied80@gmail.com";
   description "L2VPN Service module";
-  revision 01-10-2018 {
+  revision 2018-10-1 {
     description "NSO-L2VPN : 0.1";
   }
 
@@ -43,13 +43,14 @@ module nso-l2vpn {
 	    type leafref {
 	      path "/ncs:devices/ncs:device/ncs:name";
 	    }
-	    leaf loopback {
-	      description "edge router loopback for l2vpn service termination";
-	      type inet:ipv4-address;
-	    }
-	    leaf attachemnt-circuit {
-	      description "edge router service side interface";
-	      type string;
+	  }
+	  leaf loopback {
+	    description "edge router loopback for l2vpn service termination";
+	    type inet:ipv4-address;
+	  } 
+	  leaf attachemnt-circuit {
+	    description "edge router service side interface";
+	    type string;
 	    }
 	  }
 	}
