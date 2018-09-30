@@ -1,5 +1,5 @@
 module l2vpn {
-  namespace "http://com/example/l2vpn";
+  namespace "http://yang.ysaied.com/nso/l2vpn";
   prefix l2vpn;
 
   import ietf-inet-types {
@@ -8,27 +8,45 @@ module l2vpn {
   import tailf-ncs {
     prefix ncs;
   }
+  import tailf-common {
+    prefix tailf;
+  }
 
-  list l2vpn {
-    key name;
-
-    uses ncs:service-data;
-    ncs:servicepoint "l2vpn";
-
-    leaf name {
-      type string;
-    }
-
-    // may replace this with other ways of refering to the devices.
-    leaf-list device {
-      type leafref {
-        path "/ncs:devices/ncs:device/ncs:name";
+  augment /ncs:services {
+    list l2vpn {
+      key name;
+      unique pw-id;
+      uses ncs:service-data;
+      ncs:servicepoint "l2vpn";
+      leaf name {
+	description "l2vpn instance name";
+	type string;
       }
-    }
-
-    // replace with your own stuff here
-    leaf dummy {
-      type inet:ipv4-address;
+      leaf pw-id {
+	description "l2vpn pseudowire id";
+	mandatory true;
+	type uint16;
+      }
+      list edge-nodes {
+	key edge-node;
+	leaf edge-node {
+	  description "l2vpn service edge router";
+	  mandatory true;
+	  type leafref {
+	    path  "/ncs:devices/ncs:device/ncs:name";
+	  }
+	}
+	leaf loopback-ip {
+	  description "edge router loopback for l2vpn service termination";
+	  mandatory true;
+	  type inet:ipv4-address;
+	}
+	leaf attachemnt-circuit {
+	  description "edge router service side interface";
+	  mandatory true;
+	  type string;
+	}
+      }
     }
   }
 }
