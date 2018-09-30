@@ -1,0 +1,20 @@
+1- Create service skeleton
+
+cd $path/ && ncs-make-package --service-skeleton template-based $service-name$
+
+2- Write yang service model
+
+nano $path/$service-name$/src/yang/$service-name$.yang
+
+3- Compile the yang file
+
+cd $path/$service-name$/src && make
+
+3- Copy or link service directory under NCS run environment (done once)
+
+cd ~/ncs-run/packages & ln -s $path/$service-name$
+
+4- Reload NCS service packages
+
+ncs_cli
+request packages reload force
