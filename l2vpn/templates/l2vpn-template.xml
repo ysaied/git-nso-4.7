@@ -1,5 +1,4 @@
-<config-template xmlns="http://tail-f.com/ns/config/1.0"
-                 servicepoint="l2vpn">
+<config-template xmlns="http://tail-f.com/ns/config/1.0"servicepoint="l2vpn">
   <devices xmlns="http://tail-f.com/ns/ncs">
     <device>
       <!--
