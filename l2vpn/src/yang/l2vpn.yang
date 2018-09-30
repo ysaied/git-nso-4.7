@@ -27,9 +27,9 @@ module l2vpn {
 	mandatory true;
 	type uint16;
       }
-      list edge-nodes {
-	key edge-node;
-	leaf edge-node {
+      list edge-node {
+	key name;
+	leaf name {
 	  description "l2vpn service edge router";
 	  mandatory true;
 	  type leafref {
