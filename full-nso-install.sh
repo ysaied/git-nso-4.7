@@ -41,7 +41,7 @@ alu_fsize="$(wc -c </var/tmp/ncs-downloads/ncs-4.7-alu-sr-7.10.signed.bin)"
 if [ "$ncs_fsize" -ge "8000000" ]; then echo "NOKIA ALU SR Package downloaded successfully"; else echo "Failed downloading NOKIA ALU SR Package, exit script" && exit 1; fi 
 
 echo ""
-echo "Downloading SD-WAN Viptela Package"
+echo "Downloading Cisco Viptela SD-WAN vManage Package"
 wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/ncs-4.7-viptela-vmanage-1.2.2.signed.bin -L https://cisco.box.com/shared/static/dy15l1apk5c51bf2h69izf4p4f2v7uxg.bin > /dev/null
 viptela_fsize="$(wc -c </var/tmp/ncs-downloads/ncs-4.7-viptela-vmanage-1.2.2.signed.bin)"
 if [ "$ncs_fsize" -ge "1000000" ]; then echo "SD-WAN Viptela Package downloaded successfully"; else echo "Failed downloading SD-WAN Viptela Package, exit script" && exit 1; fi 
@@ -226,7 +226,7 @@ fi
 (cp -r /var/tmp/ncs-downloads/alu-sr $NCS_DIR/packages/neds) > /dev/null
 (cd $NCS_DIR/packages/neds/alu-sr/src && make) > /var/tmp/ned-alu-sr
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/alu-sr)
-if grep -q "Nothing to be done" /var/tmp/ned-alu-sr
+if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-alu-sr
 then
     echo "Juniper ALU SR NED compiled successfully :-)"
 else
@@ -240,7 +240,7 @@ fi
 (cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
 (cd $NCS_DIR/packages/neds/viptela-vmanage/src && make) > /var/tmp/ned-viptela-vmanage
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
-if grep -q "Nothing to be done" /var/tmp/ned-viptela-vmanage
+if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-viptela-vmanage
 then
     echo "Cisco Viptela SD-WAN vManage NED compiled successfully :-)"
 else
