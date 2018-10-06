@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "##########################################"
-echo "Welcome NSO Download and Installation Script"
+echo "Welcome NSO Installation Script"
 echo "##########################################"
 echo ""
 echo "Maintained by Yasser Saied (ysaied@cisco.com)
