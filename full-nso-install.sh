@@ -162,7 +162,7 @@ echo ""
 
 
 mkdir $HOME/ncs-4.7
-sh /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin > /dev/null
+(cd /var/tmp/ncs-downloads && sh /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin) > /dev/null
 sh /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.installer.bin $HOME/ncs-4.7 --local-install  > /dev/null
 . $HOME/ncs-4.7/ncsrc
 touch ~/.bash_aliases
