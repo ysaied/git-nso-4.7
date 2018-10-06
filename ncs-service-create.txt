@@ -2,6 +2,11 @@
 
 cd $path/ && ncs-make-package --service-skeleton template-based $service-name$
 
+other options
+	ncs-make-package --service-skeleton [template|java|java-and-template|python|python-and-template] $package-name$
+	ncs-make-package --erlang-skeleton $package-name$
+
+
 2- Write yang service model
 
 nano $path/$service-name$/src/yang/$service-name$.yang
