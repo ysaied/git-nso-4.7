@@ -4,10 +4,8 @@ echo "##########################################"
 echo "Welcome NSO Download and Installation Script"
 echo "##########################################"
 echo ""
-echo "
-Maintained by Yasser Saied (ysaied@cisco.com)
-Revision 06-Oct-2018
-"
+echo "Maintained by Yasser Saied (ysaied@cisco.com)
+Revision 06-Oct-2018"
 
 echo ""
 echo "##########################################"
