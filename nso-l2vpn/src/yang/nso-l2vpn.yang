@@ -23,6 +23,8 @@ module nso-l2vpn {
     container l2vpn-instances {
       description "l2vpn instances";
       list instance {
+	max-elements 2;
+	min-elements 2;
 	key name;
 	unique pwid;
 	ordered-by user;
