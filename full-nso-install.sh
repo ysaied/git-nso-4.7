@@ -234,7 +234,7 @@ else
 fi
 
 
-## Cisco Viptela SD-WAN Package
+## Cisco Viptela SD-WAN vManage Package
 (cd /var/tmp/ncs-downloads && sh ncs-4.7-viptela-vmanage-1.2.2.signed.bin) > /dev/null
 (cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-viptela-vmanage-1.2.2.tar.gz) > /dev/null
 (cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
@@ -242,9 +242,9 @@ fi
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
 if grep -q "Nothing to be done" /var/tmp/ned-alu-sr
 then
-    echo "Cisco Viptela SD-WAN NED compiled successfully :-)"
+    echo "Cisco Viptela SD-WAN vManage NED compiled successfully :-)"
 else
-	echo "Cisco Viptela SD-WAN NED compilation failed :-("
+	echo "Cisco Viptela SD-WAN vManage NED compilation failed :-("
 fi
 
 echo ""
@@ -303,9 +303,9 @@ fi
 
 if grep -q "viptela-vmanage" /var/tmp/ncs-ned-output
 then
-    echo "Cisco Viptela SD-WAN NED installed successfully :-)"
+    echo "Cisco Viptela SD-WAN vManage NED installed successfully :-)"
 else
-   echo "Cisco Viptela SD-WAN NED not installed :-(" 
+   echo "Cisco Viptela SD-WAN vManage NED not installed :-(" 
 fi
 
 echo ""
