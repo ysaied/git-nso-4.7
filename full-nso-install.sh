@@ -23,6 +23,8 @@ if [ -d /var/tmp/ncs-downloads ]; then sudo rm -r /var/tmp/ncs-downloads && echo
 if [ -f ~/.bash_aliases ]; then sudo rm ~/.bash_aliases && echo "bash_aliases file deleted"; fi
 if [ -f /var/tmp/ncs-ned-activate.sh ]; then sudo rm /var/tmp/ncs-ned-activate.sh && echo "ncs-ned-activate.sh file deleted"; fi
 if [ -f /var/tmp/ncs-ned-output ]; then sudo rm /var/tmp/ncs-ned-output && echo "ncs-ned-output file deleted"; fi
+sudo rm -r /var/tmp/*
+sudo rm /var/tmp/*
 
 echo ""
 echo "##########################################"
@@ -52,7 +54,7 @@ if [ "$ncs_fsize" -ge "1000000" ]; then echo "SD-WAN Viptela Package downloaded 
 
 echo ""
 echo "##########################################"
-echo "Install Dependencies"
+echo "Installing Linux Updates and NSO Dependencies .. that might take sometime depending on your internet connection"
 echo "##########################################"
 echo "" 
 sudo apt-get -y update > /dev/null
@@ -137,12 +139,7 @@ then
 else
    (pip install ncs > /dev/null)
 fi 
-
-echo ""
-echo "##########################################"
-echo "Install Ant"
-echo "##########################################"
-echo "" 
+ 
 check_package="$(apt list --installed show ant)"
 if [[ $check_package == *"installed"* ]]
 then 
@@ -150,20 +147,12 @@ then
 else
    (sudo apt-get install -y ant > /dev/null)
 fi 
-#echo ""
-#echo "##########################################"
-#echo "Download NSO Installer"
-#echo "##########################################"
-#echo "" 
-#mkdir $HOME/nso-tmp
-#sshpass -p $password scp -o StrictHostKeyChecking=no $username@10.71.247.158:/home/admin/cisco-nso/nso-4.7.linux.x86_64.installer.bin $HOME/nso-tmp/nso.installer.bin
-#if [ -f $HOME/nso-tmp/nso.installer.bin ]; then echo "NSO Installer downloaded successfully ...!!!"; else echo "NSO Installer download failed" && exit; fi 
+
 echo ""
 echo "##########################################"
 echo "Extract NSO Files"
 echo "##########################################"
 echo "" 
-
 
 mkdir $HOME/ncs-4.7
 (cd /var/tmp/ncs-downloads && sh /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin) > /dev/null
@@ -233,13 +222,42 @@ else
 	echo "Juniper JUNOS NED compilation failed :-("
 fi
 
+##For NSO packages not included by default and downloaded from box
+
+## NOKIA ALU SR Package
+(cd /var/tmp/ncs-downloads && sh ncs-4.7-alu-sr-7.10.signed.bin) > /dev/null
+(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-alu-sr-7.10.tar.gz) > /dev/null
+(cp -r /var/tmp/ncs-downloads/alu-sr $NCS_DIR/packages/neds) > /dev/null
+(cd $NCS_DIR/packages/neds/alu-sr/src && make) > /var/tmp/ned-alu-sr
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/alu-sr)
+if grep -q "Nothing to be done" /var/tmp/ned-alu-sr
+then
+    echo "Juniper ALU SR NED compiled successfully :-)"
+else
+	echo "Juniper ALU SR NED compilation failed :-("
+fi
+
+
+## Cisco Viptela SD-WAN Package
+(cd /var/tmp/ncs-downloads && sh ncs-4.7-viptela-vmanage-1.2.2.signed.bin) > /dev/null
+(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-viptela-vmanage-1.2.2.tar.gz) > /dev/null
+(cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
+(cd $NCS_DIR/packages/neds/viptela-vmanage/src && make) > /var/tmp/ned-viptela-vmanage
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
+if grep -q "Nothing to be done" /var/tmp/ned-alu-sr
+then
+    echo "Cisco Viptela SD-WAN NED compiled successfully :-)"
+else
+	echo "Cisco Viptela SD-WAN NED compilation failed :-("
+fi
+
 echo ""
 echo "##########################################"
 echo "Loading NEDs in NSO .. that might take few minutes"    
 echo "##########################################"
 echo ""
 
-ssh-keygen -f "/home/admin/.ssh/known_hosts" -R "[localhost]:2024" > /dev/null
+ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2024" > /dev/null
 echo '#!/usr/bin/expect -f
 spawn sshpass -p admin ssh -o StrictHostKeyChecking=no admin@localhost -p 2024
 expect "> "
@@ -278,6 +296,20 @@ then
     echo "Juniper JUNOS NED installed successfully :-)"
 else
    echo "Juniper JUNOS NED not installed :-(" 
+fi
+
+if grep -q "alu-sr" /var/tmp/ncs-ned-output
+then
+    echo "Alcatel SR NED installed successfully :-)"
+else
+   echo "Alcatel SR NED not installed :-(" 
+fi
+
+if grep -q "viptela-vmanage" /var/tmp/ncs-ned-output
+then
+    echo "Cisco Viptela SD-WAN NED installed successfully :-)"
+else
+   echo "Cisco Viptela SD-WAN NED not installed :-(" 
 fi
 
 echo ""
