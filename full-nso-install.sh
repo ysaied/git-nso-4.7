@@ -240,7 +240,7 @@ fi
 (cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
 (cd $NCS_DIR/packages/neds/viptela-vmanage/src && make) > /var/tmp/ned-viptela-vmanage
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
-if grep -q "Nothing to be done" /var/tmp/ned-alu-sr
+if grep -q "Nothing to be done" /var/tmp/ned-viptela-vmanage
 then
     echo "Cisco Viptela SD-WAN vManage NED compiled successfully :-)"
 else
