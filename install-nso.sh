@@ -209,9 +209,9 @@ else
 	echo "Cisco NXOS NED compilation failed :-("
 fi
 
-(cd $NCS_DIR/packages/neds/juniper-junos/src && make all) > /var/tmp/ned-junos
+(cd $NCS_DIR/packages/neds/juniper-junos/src && make all) > /var/tmp/ned-juniper-junos
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
-if grep -q "Nothing to be done" /var/tmp/ned-junos
+if grep -q "Nothing to be done" /var/tmp/ned-juniper-junos
 then
     echo "Juniper JUNOS NED compiled successfully :-)"
 else
