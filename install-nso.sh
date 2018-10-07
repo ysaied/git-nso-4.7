@@ -224,7 +224,7 @@ fi
 (cd /var/tmp/ncs-downloads && sh ncs-4.7-alu-sr-7.10.signed.bin) > /dev/null
 (cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-alu-sr-7.10.tar.gz) > /dev/null
 (cp -r /var/tmp/ncs-downloads/alu-sr $NCS_DIR/packages/neds) > /dev/null
-(cd $NCS_DIR/packages/neds/alu-sr/src && make) > /var/tmp/ned-alu-sr
+(cd $NCS_DIR/packages/neds/alu-sr/src && make all) > /var/tmp/ned-alu-sr
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/alu-sr)
 if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-alu-sr
 then
@@ -238,7 +238,7 @@ fi
 (cd /var/tmp/ncs-downloads && sh ncs-4.7-viptela-vmanage-1.2.2.signed.bin) > /dev/null
 (cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-viptela-vmanage-1.2.2.tar.gz) > /dev/null
 (cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
-(cd $NCS_DIR/packages/neds/viptela-vmanage/src && make) > /var/tmp/ned-viptela-vmanage
+(cd $NCS_DIR/packages/neds/viptela-vmanage/src && make all) > /var/tmp/ned-viptela-vmanage
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
 if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-viptela-vmanage
 then
