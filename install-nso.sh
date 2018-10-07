@@ -182,7 +182,7 @@ echo "Compile NSO NEDs"
 echo "##########################################"
 echo "" 
 
-(cd $NCS_DIR/packages/neds/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
+(cd $NCS_DIR/packages/neds/cisco-ios/src && make all) > /var/tmp/ned-cisco-ios
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-ios)
 if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
 then
@@ -191,7 +191,7 @@ else
 	echo "Cisco IOS/IOS-XE NED compilation failed :-("
 fi
 
-(cd $NCS_DIR/packages/neds/cisco-iosxr/src && make) > /var/tmp/ned-cisco-iosxr
+(cd $NCS_DIR/packages/neds/cisco-iosxr/src && make all) > /var/tmp/ned-cisco-iosxr
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-iosxr)
 if grep -q "Nothing to be done" /var/tmp/ned-cisco-iosxr
 then
@@ -200,7 +200,7 @@ else
 	echo "Cisco IOS-XR NED compilation failed :-("
 fi
 
-(cd $NCS_DIR/packages/neds/cisco-nx/src && make) > /var/tmp/ned-cisco-nxos
+(cd $NCS_DIR/packages/neds/cisco-nx/src && make all) > /var/tmp/ned-cisco-nxos
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-nx)
 if grep -q "Nothing to be done" /var/tmp/ned-cisco-nxos
 then
@@ -209,7 +209,7 @@ else
 	echo "Cisco NXOS NED compilation failed :-("
 fi
 
-(cd $NCS_DIR/packages/neds/juniper-junos/src && make) > /var/tmp/ned-junos
+(cd $NCS_DIR/packages/neds/juniper-junos/src && make all) > /var/tmp/ned-junos
 (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
 if grep -q "Nothing to be done" /var/tmp/ned-junos
 then
