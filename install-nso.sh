@@ -178,7 +178,7 @@ else
 fi
 echo ""
 echo "##########################################"
-echo "Compile NSO NEDs"    
+echo "Compile NSO Packages"    
 echo "##########################################"
 echo "" 
 
@@ -249,7 +249,7 @@ fi
 
 echo ""
 echo "##########################################"
-echo "Loading NEDs in NSO .. that might take few minutes"    
+echo "Loading Packages in NSO runtime .. that might take few minutes"    
 echo "##########################################"
 echo ""
 
