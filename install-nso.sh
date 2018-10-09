@@ -29,6 +29,13 @@ echo "##########################################"
 echo ""
 
 mkdir  /var/tmp/ncs-downloads
+
+echo "Downloading NSO 4.7"
+wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/nso-4.7-all.tar -L https://cisco.box.com/shared/static/wtde8q1gx68cfhl1r5bm1mc0h13l2wq0.tar > /dev/null
+nso_fsize="$(wc -c </var/tmp/ncs-downloads/nso-4.7-all.tar)"
+if [ "$nso_fsize" -ge "300000000" ]; then echo "NSO file downloaded successfully"; else echo "Failed to downloadi NSO file, exit script" && exit 1; fi 
+
+
 echo "Downloading NSO 4.7 Main Software"
 wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin -L https://cisco.box.com/shared/static/sxuxink81v3klkwkjx2edbe9c5eekhyp.bin > /dev/null
 ncs_fsize="$(wc -c </var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin)"
