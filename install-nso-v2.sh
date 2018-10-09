@@ -30,12 +30,24 @@ echo ""
 
 mkdir  /var/tmp/ncs-downloads
 
-echo "Downloading NSO 4.7"
-wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/nso-4.7-all.tar -L https://cisco.box.com/shared/static/wtde8q1gx68cfhl1r5bm1mc0h13l2wq0.tar > /dev/null
-nso_fsize="$(wc -c </var/tmp/ncs-downloads/nso-4.7-all.tar)"
-if [ "$nso_fsize" -ge "300000000" ]; then echo "NSO file downloaded successfully"; else echo "Failed to downloadi NSO file, exit script" && exit 1; fi 
+echo "Downloading NSO 4.7 Main Software"
+wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin -L https://cisco.box.com/shared/static/sxuxink81v3klkwkjx2edbe9c5eekhyp.bin > /dev/null
+ncs_fsize="$(wc -c </var/tmp/ncs-downloads/nso-4.7.linux.x86_64.signed.bin)"
+if [ "$ncs_fsize" -ge "180000000" ]; then echo "NSO file downloaded successfully"; else echo "Failed downloading NSO file, exit script" && exit 1; fi 
 
-(cd /var/tmp/ncs-downloads && tar -xf nso-4.7-all.tar) > /dev/null
+echo ""
+echo "Downloading Nokia ALU SR Package"
+wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/ncs-4.7-alu-sr-7.10.signed.bin -L https://cisco.box.com/shared/static/vq56lc76qoomyesqcgerk5sva0of6ehm.bin > /dev/null
+alu_fsize="$(wc -c </var/tmp/ncs-downloads/ncs-4.7-alu-sr-7.10.signed.bin)"
+if [ "$ncs_fsize" -ge "8000000" ]; then echo "NOKIA ALU SR Package downloaded successfully"; else echo "Failed downloading NOKIA ALU SR Package, exit script" && exit 1; fi 
+
+echo ""
+echo "Downloading Cisco Viptela SD-WAN vManage Package"
+wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/ncs-4.7-viptela-vmanage-1.2.2.signed.bin -L https://cisco.box.com/shared/static/dy15l1apk5c51bf2h69izf4p4f2v7uxg.bin > /dev/null
+viptela_fsize="$(wc -c </var/tmp/ncs-downloads/ncs-4.7-viptela-vmanage-1.2.2.signed.bin)"
+if [ "$ncs_fsize" -ge "1000000" ]; then echo "SD-WAN Viptela Package downloaded successfully"; else echo "Failed downloading SD-WAN Viptela Package, exit script" && exit 1; fi 
+
+
 
 echo ""
 echo "##########################################"
@@ -171,18 +183,69 @@ echo "Compile NSO Packages"
 echo "##########################################"
 echo "" 
 
-rm -rf $NCS_DIR/packages/*
-
-(cd /var/tmp//var/tmp/ncs-downloads && sh ncs-4.7.1-cisco-ios-6.4.1.signed.bin) > /dev/null
-(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7.1-cisco-ios-6.4.1.tar.gz) > /dev/null
-(cp -r /var/tmp/ncs-downloads/cisco-ios $NCS_DIR/packages) > /dev/null
-(cd $NCS_DIR/packages/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/cisco-ios)
+(cd $NCS_DIR/packages/neds/cisco-ios/src && make all) > /var/tmp/ned-cisco-ios
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-ios)
 if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
 then
     echo "Cisco IOS/IOS-XE NED compiled successfully :-)"
 else
 	echo "Cisco IOS/IOS-XE NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/cisco-iosxr/src && make all) > /var/tmp/ned-cisco-iosxr
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-iosxr)
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-iosxr
+then
+    echo "Cisco IOS-XR NED compiled successfully :-)"
+else
+	echo "Cisco IOS-XR NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/cisco-nx/src && make all) > /var/tmp/ned-cisco-nxos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/cisco-nx)
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-nxos
+then
+    echo "Cisco NXOS NED compiled successfully :-)"
+else
+	echo "Cisco NXOS NED compilation failed :-("
+fi
+
+(cd $NCS_DIR/packages/neds/juniper-junos/src && make all) > /var/tmp/ned-juniper-junos
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/juniper-junos)
+if grep -q "Nothing to be done" /var/tmp/ned-juniper-junos
+then
+    echo "Juniper JUNOS NED compiled successfully :-)"
+else
+	echo "Juniper JUNOS NED compilation failed :-("
+fi
+
+##For NSO packages not included by default and downloaded from box
+
+## NOKIA ALU SR Package
+(cd /var/tmp/ncs-downloads && sh ncs-4.7-alu-sr-7.10.signed.bin) > /dev/null
+(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-alu-sr-7.10.tar.gz) > /dev/null
+(cp -r /var/tmp/ncs-downloads/alu-sr $NCS_DIR/packages/neds) > /dev/null
+(cd $NCS_DIR/packages/neds/alu-sr/src && make all) > /var/tmp/ned-alu-sr
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/alu-sr)
+if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-alu-sr
+then
+    echo "Juniper ALU SR NED compiled successfully :-)"
+else
+	echo "Juniper ALU SR NED compilation failed :-("
+fi
+
+
+## Cisco Viptela SD-WAN vManage Package
+(cd /var/tmp/ncs-downloads && sh ncs-4.7-viptela-vmanage-1.2.2.signed.bin) > /dev/null
+(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7-viptela-vmanage-1.2.2.tar.gz) > /dev/null
+(cp -r /var/tmp/ncs-downloads/viptela-vmanage $NCS_DIR/packages/neds) > /dev/null
+(cd $NCS_DIR/packages/neds/viptela-vmanage/src && make all) > /var/tmp/ned-viptela-vmanage
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/neds/viptela-vmanage)
+if grep -q "BUILD SUCCESSFUL" /var/tmp/ned-viptela-vmanage
+then
+    echo "Cisco Viptela SD-WAN vManage NED compiled successfully :-)"
+else
+	echo "Cisco Viptela SD-WAN vManage NED compilation failed :-("
 fi
 
 echo ""
