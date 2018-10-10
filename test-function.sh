@@ -6,13 +6,13 @@
 
 function install_linux_package()
 {
-   check_package="$(dpkg -s $1 &> /dev/null)"
-   if [[ $check_package == *"installed"* ]]
+   check_package="$(dpkg -s $1 &> /var/tmp/linux_pak_$1)" 
+   if [[ /var/tmp/linux_pak_$1 == *"installed"* ]]
    then
       echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
-      echo "$1 installed"
+      echo "$1 was not there, but now is installed"
    fi
 
 }

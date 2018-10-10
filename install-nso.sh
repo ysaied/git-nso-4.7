@@ -51,7 +51,7 @@ sudo apt-get -y upgrade > /dev/null
 
 function install_linux_package()
 {
-   check_package="$(dpkg -s $1 &> /dev/null)" 
+   check_package="$(dpkg -s $1 &> /var/tmp/linux_pak_$1)" 
    if [[ $check_package == *"installed"* ]]
    then
       echo "$1 already installed"
