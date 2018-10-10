@@ -6,14 +6,14 @@
 
 function install_linux_package()
 {
-   rm -rf /var/tmp/linux_pak_$1
-   dpkg -s $1 &> /var/tmp/linux_pak_$1 
-   if grep -q "Status: install ok installed" /var/tmp/linux_pak_$1
+#   rm -rf /var/tmp/linux_pak_$1 &> /dev/null
+   (check_package="($dpkg -s $1)") &> /dev/null 
+   if grep -q "Status: install ok installed" $check_package
    then
       echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
-      echo "$1 was not there, but now is installed"
+      echo "$1 was not found, now get installed"
    fi
 }
 
