@@ -126,7 +126,7 @@ else
 fi
 echo ""
 echo "##########################################"
-echo "Extracting NSO Packages"    
+echo "Extracting NSO Packages .. that might take few minutes"      
 echo "##########################################"
 echo "" 
 
