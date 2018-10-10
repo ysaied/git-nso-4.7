@@ -189,19 +189,17 @@ function install_ned()
 	fi
 }
 
-install_ned "cisco-ios" "ncs-4.7.1-cisco-ios-6.4.1.signed" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+install_ned "cisco-ios" "ncs-4.7.1-cisco-ios-6.4.1.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
 
-exit
+install_ned "cisco-iosxr" "ncs-4.7-cisco-iosxr-7.3.2.signed.bin" "ncs-4.7-cisco-iosxr-7.3.2.tar.gz"
 
-install_ned "cisco-ios" "ncs-4.7-cisco-iosxr-7.3.2.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+install_ned "juniper-junos" "ncs-4.7.1-juniper-junos-4.0.4.signed.bin" "ncs-4.7.1-juniper-junos-4.0.4.tar.gz"
 
-install_ned "cisco-ios" "ncs-4.7.1-juniper-junos-4.0.4.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+install_ned "alu-sr" "ncs-4.7-alu-sr-7.10.signed.bin" "ncs-4.7-alu-sr-7.10.tar.gz"
 
-install_ned "cisco-ios" "ncs-4.7-alu-sr-7.10.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+install_ned "viptela-vmanage" "ncs-4.7-viptela-vmanage-1.2.2.signed.bin" "ncs-4.7-viptela-vmanage-1.2.2.tar.gz"
 
-install_ned "cisco-ios" "ncs-4.7-viptela-vmanage-1.2.2.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
-
-install_ned "cisco-ios" "ncs-4.7-resource-manager-project-3.3.1.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+install_ned "ncs-4.7-resource-manager-project-3.3.1" "ncs-4.7-resource-manager-project-3.3.1.signed.bin" "ncs-4.7-resource-manager-project-3.3.1.tar.gz"
 
 
 
