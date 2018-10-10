@@ -6,7 +6,7 @@
 
 function install_linux_package()
 {
-   check_package="$(apt-cache show $1 | grep \"Package: $1\")" &> /dev/null
+   check_package="$(apt-cache show $1 | grep 'Package: $1')" &> /dev/null
    if [ -z $check_package ]
    then
       echo "$1 Installed"
