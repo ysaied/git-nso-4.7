@@ -52,14 +52,13 @@ sudo apt-get -y upgrade > /dev/null
 function install_linux_package()
 {
    check_package="$(dpkg -s $1 &> /var/tmp/linux_pak_$1)" 
-   if [[ $check_package == *"installed"* ]]
+   if grep -q "installed" /var/tmp/linux_pak_$1
    then
       echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
       echo "$1 was not there, but now is installed"
    fi
-
 }
 
 function install_python_package()
