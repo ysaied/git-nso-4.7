@@ -167,40 +167,43 @@ else
 fi
 echo ""
 echo "##########################################"
-echo "Compile NSO Packages"    
+echo "Extract NSO Packages"    
 echo "##########################################"
 echo "" 
 
 rm -rf $NCS_DIR/packages/*
 
-(cd /var/tmp/var/tmp/ncs-downloads && sh ncs-4.7.1-cisco-ios-6.4.1.signed.bin) > /dev/null
-(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7.1-cisco-ios-6.4.1.tar.gz) > /dev/null
-(cp -r /var/tmp/ncs-downloads/cisco-ios $NCS_DIR/packages) > /dev/null
-(cd $NCS_DIR/packages/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/cisco-ios)
-if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
-then
-    echo "Cisco IOS/IOS-XE NED compiled successfully :-)"
-else
-	echo "Cisco IOS/IOS-XE NED compilation failed :-("
-fi
-
 
 function install_ned()
 {
-(cd /var/tmp/var/tmp/ncs-downloads && sh $1) > /dev/null
-(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7.1-cisco-ios-6.4.1.tar.gz) > /dev/null
-(cp -r /var/tmp/ncs-downloads/cisco-ios $NCS_DIR/packages) > /dev/null
-(cd $NCS_DIR/packages/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
-(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/cisco-ios)
-if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
-then
-    echo "Cisco IOS/IOS-XE NED compiled successfully :-)"
-else
-	echo "Cisco IOS/IOS-XE NED compilation failed :-("
-fi
-
+	(cd /var/tmp/ncs-downloads && sh $2) > /dev/null
+	(cd /var/tmp/ncs-downloads && tar -xf $3) > /dev/null
+	(cp -r /var/tmp/ncs-downloads/$1 $NCS_DIR/packages) > /dev/null
+	(cd $NCS_DIR/packages/$1/src && make) > /var/tmp/make-$1
+    (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/$1)
+	if grep -q "Nothing to be done" /var/tmp/make-$1
+	then
+    	echo "$1 NED extracted successfully :-)"
+	else
+		echo "$1 NED extraction failed :-("
+	fi
 }
+
+install_ned "cisco-ios" "ncs-4.7.1-cisco-ios-6.4.1.signed" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+exit
+
+install_ned "cisco-ios" "ncs-4.7-cisco-iosxr-7.3.2.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+install_ned "cisco-ios" "ncs-4.7.1-juniper-junos-4.0.4.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+install_ned "cisco-ios" "ncs-4.7-alu-sr-7.10.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+install_ned "cisco-ios" "ncs-4.7-viptela-vmanage-1.2.2.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+install_ned "cisco-ios" "ncs-4.7-resource-manager-project-3.3.1.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
+
+
 
 
 echo ""
