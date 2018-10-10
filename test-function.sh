@@ -6,7 +6,7 @@
 
 function install_linux_package()
 {
-   check_package="$(dpkg -s $1)" &> /dev/null
+   check_package="$(dpkg -s $1 &> /dev/null)"
    if [[ $check_package == *"installed"* ]]
    then
       echo "$1 already installed"
