@@ -7,7 +7,7 @@
 function install_linux_package()
 {
    check_package="$(dpkg -s $1 &> /var/tmp/linux_pak_$1)" 
-   if [[ /var/tmp/linux_pak_$1 == *"installed"* ]]
+   if [[ "/var/tmp/linux_pak_$1" == *"installed"* ]]
    then
       echo "$1 already installed"
    else
