@@ -51,13 +51,13 @@ sudo apt-get -y upgrade > /dev/null
 
 function install_linux_package()
 {
-   check_package="$(apt list --installed show $1)" &> /dev/null
+   check_package="$(apt list --installed show $1 &> /dev/null)" 
    if [[ $check_package == *"installed"* ]]
    then
-      echo "$1 Installed"
+      echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
-      echo "$1 Installed"
+      echo "$1 was not there, but now is installed"
    fi
 
 }
