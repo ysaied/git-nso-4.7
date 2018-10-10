@@ -13,11 +13,7 @@ touch /var/tmp/test; sudo rm -r /var/tmp/*
 mkdir  /var/tmp/ncs-downloads
 
 echo "Downloading NSO 4.7"
-wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/nso-4.7-all.tar -L https://cisco.box.com/shared/static/wtde8q1gx68cfhl1r5bm1mc0h13l2wq0.tar > /dev/null
-nso_fsize="$(wc -c </var/tmp/ncs-downloads/nso-4.7-all.tar)"
-if [ "$nso_fsize" -ge "300000000" ]; then echo "NSO file downloaded successfully"; else echo "Failed to downloadi NSO file, exit script" && exit 1; fi 
-
-(cd /var/tmp/ncs-downloads && tar -xf nso-4.7-all.tar) > /dev/null
+wget -q --show-progress --no-check-certificate -O /var/tmp/ncs-downloads/ncs-4.7.1-cisco-ios-6.4.1.signed -L https://cisco.box.com/shared/static/z7uyxa9152brxnp2im0s1ujol3jj4l6x.bin > /dev/null
 
 
 function install_ned()
