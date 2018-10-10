@@ -124,7 +124,7 @@ else
 fi
 echo ""
 echo "##########################################"
-echo "Extract NSO Packages"    
+echo "Extracting NSO Packages"    
 echo "##########################################"
 echo "" 
 
@@ -145,19 +145,11 @@ function install_ned()
 	fi
 }
 
-#cisco-ios ned
+#list NSO packages
 install_ned "cisco-ios" "ncs-4.7.1-cisco-ios-6.4.1.signed.bin" "ncs-4.7.1-cisco-ios-6.4.1.tar.gz"
-
-#cisco-iosxr ned
 install_ned "cisco-iosxr" "ncs-4.7-cisco-iosxr-7.3.2.signed.bin" "ncs-4.7-cisco-iosxr-7.3.2.tar.gz"
-
-#juniper-junos ned
 install_ned "juniper-junos" "ncs-4.7.1-juniper-junos-4.0.4.signed.bin" "ncs-4.7.1-juniper-junos-4.0.4.tar.gz"
-
-#alcatel sr ned
 install_ned "alu-sr" "ncs-4.7-alu-sr-7.10.signed.bin" "ncs-4.7-alu-sr-7.10.tar.gz"
-
-#viptela vManage ned
 install_ned "viptela-vmanage" "ncs-4.7-viptela-vmanage-1.2.2.signed.bin" "ncs-4.7-viptela-vmanage-1.2.2.tar.gz"
 
 
@@ -181,47 +173,23 @@ interact' | sudo tee /var/tmp/ncs-ned-activate.sh > /dev/null
 sudo chmod 775 /var/tmp/ncs-ned-activate.sh
 (cd /var/tmp && ./ncs-ned-activate.sh) > /dev/null
 
-if grep -q "cisco-ios" /var/tmp/ncs-ned-output
-then
-    echo "Cisco IOS/IOS-XE NED installed successfully :-)"
-else
-   echo "Cisco IOS/IOS-XE NED not installed :-(" 
-fi
+function check_ned()
+{
+   if grep -q "$1" /var/tmp/ncs-ned-output
+   then
+      echo "$1 NED installed successfully :-)"
+   else
+      echo "$1 NED not installed :-("
+   fi
+}
 
-if grep -q "cisco-iosxr" /var/tmp/ncs-ned-output
-then
-    echo "Cisco IOS-XR NED installed successfully :-)"
-else
-   echo "Cisco IOS-XR NED not installed :-(" 
-fi
+#list NSO packages
+check_ned "cisco-ios"
+check_ned "cisco-iosxr"
+check_ned "juniper-junos"
+check_ned "alu-sr"
+check_ned "viptela-vmanage"
 
-if grep -q "cisco-nx" /var/tmp/ncs-ned-output
-then
-    echo "Cisco NXOS NED installed successfully :-)"
-else
-   echo "Cisco NXOS NED not installed :-(" 
-fi
-
-if grep -q "juniper-junos" /var/tmp/ncs-ned-output
-then
-    echo "Juniper JUNOS NED installed successfully :-)"
-else
-   echo "Juniper JUNOS NED not installed :-(" 
-fi
-
-if grep -q "alu-sr" /var/tmp/ncs-ned-output
-then
-    echo "Alcatel SR NED installed successfully :-)"
-else
-   echo "Alcatel SR NED not installed :-(" 
-fi
-
-if grep -q "viptela-vmanage" /var/tmp/ncs-ned-output
-then
-    echo "Cisco Viptela SD-WAN vManage NED installed successfully :-)"
-else
-   echo "Cisco Viptela SD-WAN vManage NED not installed :-(" 
-fi
 
 echo ""
 echo "##########################################"
