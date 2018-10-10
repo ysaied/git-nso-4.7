@@ -6,13 +6,13 @@
 
 function install_linux_package()
 {
-   check_package="$(apt-cache show $1 | grep 'Package: $1')" &> /dev/null
-   if [ -z $check_package ]
+   check_package="$(dpkg -s python)" &> /dev/null
+   if [[ $check_package == *"installed"* ]]
    then
-      echo "$1 Installed"
+      echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
-      echo "$1 Installed"
+      echo "$1 installed"
    fi
 
 }
