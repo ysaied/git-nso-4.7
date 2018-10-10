@@ -173,7 +173,7 @@ echo ""
 
 rm -rf $NCS_DIR/packages/*
 
-(cd /var/tmp//var/tmp/ncs-downloads && sh ncs-4.7.1-cisco-ios-6.4.1.signed.bin) > /dev/null
+(cd /var/tmp/var/tmp/ncs-downloads && sh ncs-4.7.1-cisco-ios-6.4.1.signed.bin) > /dev/null
 (cd /var/tmp/ncs-downloads && tar -xf ncs-4.7.1-cisco-ios-6.4.1.tar.gz) > /dev/null
 (cp -r /var/tmp/ncs-downloads/cisco-ios $NCS_DIR/packages) > /dev/null
 (cd $NCS_DIR/packages/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
@@ -184,6 +184,24 @@ then
 else
 	echo "Cisco IOS/IOS-XE NED compilation failed :-("
 fi
+
+
+function install_ned()
+{
+(cd /var/tmp/var/tmp/ncs-downloads && sh $1) > /dev/null
+(cd /var/tmp/ncs-downloads && tar -xf ncs-4.7.1-cisco-ios-6.4.1.tar.gz) > /dev/null
+(cp -r /var/tmp/ncs-downloads/cisco-ios $NCS_DIR/packages) > /dev/null
+(cd $NCS_DIR/packages/cisco-ios/src && make) > /var/tmp/ned-cisco-ios
+(cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/cisco-ios)
+if grep -q "Nothing to be done" /var/tmp/ned-cisco-ios
+then
+    echo "Cisco IOS/IOS-XE NED compiled successfully :-)"
+else
+	echo "Cisco IOS/IOS-XE NED compilation failed :-("
+fi
+
+}
+
 
 echo ""
 echo "##########################################"
