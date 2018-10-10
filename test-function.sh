@@ -8,7 +8,7 @@ function install_linux_package()
 {
    rm -rf /var/tmp/linux_pak_$1
    dpkg -s $1 &> /var/tmp/linux_pak_$1 
-   if grep -q "installed" /var/tmp/linux_pak_$1
+   if grep -q "Status: install ok installed" /var/tmp/linux_pak_$1
    then
       echo "$1 already installed"
    else
