@@ -20,7 +20,7 @@ if [ -d $HOME/nso-run ]; then sudo rm -r $HOME/nso-run && echo "nso-run director
 if [ -d $HOME/ncs-4.7 ]; then sudo rm -r $HOME/ncs-4.7 && echo "ncs-4.7 directory deleted"; fi
 if [ -d $HOME/ncs-run ]; then sudo rm -r $HOME/ncs-run && echo "ncs-run directory deleted"; fi
 if [ -f ~/.bash_aliases ]; then sudo rm ~/.bash_aliases && echo "bash_aliases file deleted"; fi
-touch /var/tmp/test; sudo rm -r /var/tmp/*
+sudo rm -rf /var/tmp/*
 
 echo ""
 echo "##########################################"
@@ -57,6 +57,7 @@ function install_linux_package()
       echo "$1 Installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
+      echo "$1 Installed"
    fi
 
 }
@@ -69,6 +70,7 @@ function install_python_package()
       echo "$1 Python Package Installed"
    else
       (pip install $1 &> /dev/null)
+      "$1 Python Package Installed"
    fi
 
 }
