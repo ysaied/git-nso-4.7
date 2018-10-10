@@ -137,7 +137,7 @@ function install_ned()
    (cp -r /var/tmp/ncs-downloads/$1 $NCS_DIR/packages) > /dev/null
    (cd $NCS_DIR/packages/$1/src && make) &> /var/tmp/make-$1
    (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/$1)
-   if grep -q "BUILD SUCCESSFUL" /var/tmp/make-$1
+   if grep -q "BUILD SUCCESSFUL\|Nothing to be done" /var/tmp/make-$1
    then
       echo "$1 NED extracted successfully :-)"
    else
