@@ -184,7 +184,7 @@ function install_ned()
 	(cp -r /var/tmp/ncs-downloads/$1 $NCS_DIR/packages) > /dev/null
 	(cd $NCS_DIR/packages/$1/src && make) > /var/tmp/make-$1
     (cd ~/ncs-run/packages/ && ln -s $NCS_DIR/packages/$1)
-	if grep -q "Nothing to be done" /var/tmp/make-$1
+	if grep -q "BUILD SUCCESSFUL" /var/tmp/make-$1
 	then
     	echo "$1 NED extracted successfully :-)"
 	else
@@ -201,9 +201,6 @@ install_ned "juniper-junos" "ncs-4.7.1-juniper-junos-4.0.4.signed.bin" "ncs-4.7.
 install_ned "alu-sr" "ncs-4.7-alu-sr-7.10.signed.bin" "ncs-4.7-alu-sr-7.10.tar.gz"
 
 install_ned "viptela-vmanage" "ncs-4.7-viptela-vmanage-1.2.2.signed.bin" "ncs-4.7-viptela-vmanage-1.2.2.tar.gz"
-
-install_ned "ncs-4.7-resource-manager-project-3.3.1" "ncs-4.7-resource-manager-project-3.3.1.signed.bin" "ncs-4.7-resource-manager-project-3.3.1.tar.gz"
-
 
 
 
