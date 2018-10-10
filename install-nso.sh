@@ -58,7 +58,7 @@ function install_linux_package()
       echo "$1 already installed"
    else
       (sudo apt-get install -y $1 &> /dev/null)
-      echo "$1 was not there, but now is installed"
+      echo "$1 was not found, now get installed"
    fi
 }
 
@@ -67,10 +67,10 @@ function install_python_package()
    check_package="$(pip freeze | grep $1)"
    if [[ "$check_package" ]]
    then
-      echo "$1 Python Package Installed"
+      echo "$1 python package already installed"
    else
       (pip install $1 &> /dev/null)
-      "$1 Python Package Installed"
+      echo "$1 python package was not found, now get installed"
    fi
 
 }
